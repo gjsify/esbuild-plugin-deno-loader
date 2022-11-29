@@ -23,6 +23,7 @@ const baseConfig = {
         'typescript',
         '@deepkit/type-compiler',
         'esbuild',
+        // '@gjsify/resolve-npm',
         '@gjsify/esbuild-plugin-gjsify',
         '@gjsify/esbuild-plugin-deepkit',
     ],

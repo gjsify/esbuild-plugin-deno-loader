@@ -56,13 +56,26 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
         args: esbuild.OnResolveArgs,
       ): Promise<esbuild.OnResolveResult | null | undefined> {
 
+        // console.debug("[deno] onResolve", args.path);
+
         // If this is a node module
-        // if(args.kind === 'import-statement') {
-        //   const nodeModulePath = await getNodeModulesPath(args.path);
-        //   if(nodeModulePath) {
-        //     return null
-        //   }
-        // }
+        if(args.kind === 'import-statement' || args.kind === 'require-call') {
+          const nodeModulePath = await getNodeModulesPath(args.path);
+          if(nodeModulePath) {
+            return null
+          }
+        }
+
+        if(args.path.endsWith('/')) {
+          return null;
+        }
+
+        if (args.path.startsWith('gi://')) {
+          return {
+            path: args.path,
+            external: true,
+          }
+        }
         
         const resolveDir = args.resolveDir
           ? `${toFileUrl(args.resolveDir).href}/`
@@ -99,6 +112,9 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
         args: esbuild.OnLoadArgs,
       ): Promise<esbuild.OnLoadResult | null> {
         let url;
+
+        // console.debug("[deno] onLoad", args.path);
+
         if (args.namespace === "file") {
           url = toFileUrl(args.path);
         } else {
