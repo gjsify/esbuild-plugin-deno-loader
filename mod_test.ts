@@ -1,6 +1,6 @@
-import { denoPlugin } from "./mod.ts";
-import { esbuild } from "./test_deps.ts";
-import { assert, assertEquals } from "./test_deps.ts";
+import { denoPlugin } from "./mod.js";
+import { esbuild } from "./test_deps.js";
+import { assert, assertEquals } from "./test_deps.js";
 
 const ALL = ["native", "portable"] as const;
 
@@ -12,10 +12,10 @@ function test(
   for (const loader of loaders) {
     Deno.test(`[${loader}] ${name}`, async () => {
       try {
-        await esbuild.initialize({});
+        // await esbuild.initialize({});
         await fn(loader);
       } finally {
-        esbuild.stop();
+        // esbuild.stop();
       }
     });
   }

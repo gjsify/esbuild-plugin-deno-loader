@@ -1,6 +1,14 @@
-import * as esbuild from "https://deno.land/x/esbuild@v0.15.10/mod.js";
+import * as esbuild from "esbuild";
 export { esbuild };
-export {
-  assert,
-  assertEquals,
-} from "https://deno.land/std@0.156.0/testing/asserts.ts";
+
+import {
+  equal,
+  deepEqual as assertEquals,
+  throws as assertThrows
+} from 'assert'
+
+const assert = (test: boolean) => {
+  return equal(test, true);
+}
+
+export { assert, assertEquals, assertThrows }

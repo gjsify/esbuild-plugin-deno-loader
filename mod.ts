@@ -5,10 +5,13 @@ import {
   resolveImportMap,
   resolveModuleSpecifier,
   toFileUrl,
-} from "./deps.ts";
-import { load as nativeLoad } from "./src/native_loader.ts";
-import { load as portableLoad } from "./src/portable_loader.ts";
-import { ModuleEntry } from "./src/deno.ts";
+} from "./deps.js";
+import { load as nativeLoad } from "./src/native_loader.js";
+import { load as portableLoad } from "./src/portable_loader.js";
+import { ModuleEntry } from "./src/deno.js";
+import { getNodeModulesPath } from './src/node.js';
+import { existsSync } from 'fs';
+import { transformExtern, DeepkitPluginOptions } from '@gjsify/esbuild-plugin-deepkit';
 
 export interface DenoPluginOptions {
   /**
@@ -29,14 +32,9 @@ export interface DenoPluginOptions {
 }
 
 /** The default loader to use. */
-export const DEFAULT_LOADER: "native" | "portable" =
-  await Deno.permissions.query({ name: "run" }).then((res) =>
-      res.state !== "granted"
-    )
-    ? "portable"
-    : "native";
+export const DEFAULT_LOADER: "native" | "portable" = "portable";
 
-export function denoPlugin(options: DenoPluginOptions = {}): esbuild.Plugin {
+export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {}): esbuild.Plugin {
   const loader = options.loader ?? DEFAULT_LOADER;
   return {
     name: "deno",
@@ -54,9 +52,18 @@ export function denoPlugin(options: DenoPluginOptions = {}): esbuild.Plugin {
         }
       });
 
-      build.onResolve({ filter: /.*/ }, function onResolve(
+      build.onResolve({ filter: /.*/ }, async function onResolve(
         args: esbuild.OnResolveArgs,
-      ): esbuild.OnResolveResult | null | undefined {
+      ): Promise<esbuild.OnResolveResult | null | undefined> {
+
+        // If this is a node module
+        // if(args.kind === 'import-statement') {
+        //   const nodeModulePath = await getNodeModulesPath(args.path);
+        //   if(nodeModulePath) {
+        //     return null
+        //   }
+        // }
+        
         const resolveDir = args.resolveDir
           ? `${toFileUrl(args.resolveDir).href}/`
           : "";
@@ -77,13 +84,18 @@ export function denoPlugin(options: DenoPluginOptions = {}): esbuild.Plugin {
         const protocol = resolved.protocol;
         if (protocol === "file:") {
           const path = fromFileUrl(resolved);
-          return { path, namespace: "file" };
+          if(existsSync(path)) {
+            return { path, namespace: "file" };
+          } else {
+            return null;
+          }
         }
         const path = resolved.href.slice(protocol.length);
         return { path, namespace: protocol.slice(0, -1) };
+
       });
 
-      function onLoad(
+      async function onLoad(
         args: esbuild.OnLoadArgs,
       ): Promise<esbuild.OnLoadResult | null> {
         let url;
@@ -92,11 +104,18 @@ export function denoPlugin(options: DenoPluginOptions = {}): esbuild.Plugin {
         } else {
           url = new URL(`${args.namespace}:${args.path}`);
         }
+
+        let result: esbuild.OnLoadResult | null = null
+
         switch (loader) {
           case "native":
-            return nativeLoad(infoCache, url, options);
+            result = await nativeLoad(infoCache, url, options);
           case "portable":
-            return portableLoad(url, options);
+            result = await portableLoad(url, options);
+        }
+
+        if(result?.contents) {
+          return transformExtern(options, args, result);
         }
       }
       build.onLoad({ filter: /.*\.json/, namespace: "file" }, onLoad);

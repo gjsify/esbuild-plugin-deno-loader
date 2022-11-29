@@ -1,5 +1,5 @@
-import { esbuild } from "../deps.ts";
-import { MediaType } from "./deno.ts";
+import { esbuild } from "../deps.js";
+import { MediaType } from "./deno.js";
 
 export function mediaTypeToLoader(mediaType: MediaType): esbuild.Loader {
   switch (mediaType) {

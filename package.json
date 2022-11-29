@@ -1,0 +1,31 @@
+{
+    "name": "@gjsify/esbuild-plugin-deno-loader",
+    "version": "0.0.1",
+    "description": "Deno module resolution for esbuild",
+    "type": "module",
+    "main": "dist/mod.cjs",
+    "module": "dist/mod.mjs",
+    "types": "dist/mod.d.ts",
+    "scripts": {
+        "clear": "rm -rf dist",
+        "print:name": "echo '@gjsify/esbuild-plugin-deno-loader'",
+        "test": "node run-tests.mjs",
+        "build": "yarn run build:js && yarn run build:types",
+        "build:js": "node esbuild.mjs",
+        "build:types": "tsc --emitDeclarationOnly || exit 0"
+    },
+    "keywords": [
+        "gjs",
+        "deno",
+        "esbuild",
+        "loader"
+    ],
+    "devDependencies": {
+        "esbuild": "^0.15.16",
+        "typescript": "^4.9.3"
+    },
+    "dependencies": {
+        "@gjsify/esbuild-plugin-deepkit": "workspace:^",
+        "deno-importmap": "github:gjsify/deno-importmap"
+    }
+}

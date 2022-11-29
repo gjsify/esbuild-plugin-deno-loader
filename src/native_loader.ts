@@ -1,6 +1,7 @@
-import { esbuild, fromFileUrl } from "../deps.ts";
-import * as deno from "./deno.ts";
-import { mediaTypeToLoader, transformRawIntoContent } from "./shared.ts";
+import { esbuild, fromFileUrl } from "../deps.js";
+import * as deno from "./deno.js";
+import { mediaTypeToLoader, transformRawIntoContent } from "./shared.js";
+import { readFile } from 'fs/promises';
 
 export interface LoadOptions {
   importMapURL?: URL;
@@ -58,7 +59,7 @@ async function loadFromCLI(
 
   const loader = mediaTypeToLoader(mediaType);
 
-  const raw = await Deno.readFile(module.local);
+  const raw = await readFile(module.local);
   const contents = transformRawIntoContent(raw, mediaType);
 
   return { contents, loader };

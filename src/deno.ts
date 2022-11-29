@@ -1,3 +1,6 @@
+import { tmpdir } from 'os';
+import { run, Resolve } from './run.js';
+
 // Lifted from https://raw.githubusercontent.com/denoland/deno_graph/89affe43c9d3d5c9165c8089687c107d53ed8fe1/lib/media_type.ts
 export type MediaType =
   | "JavaScript"
@@ -44,46 +47,30 @@ export async function info(
   specifier: URL,
   options: DenoInfoOptions,
 ): Promise<InfoOutput> {
-  const cmd = [
-    Deno.execPath(),
+  const cmd = "deno";
+  const args = [
     "info",
     "--json",
   ];
   if (options.importMap !== undefined) {
-    cmd.push("--import-map", options.importMap);
+    args.push("--import-map", options.importMap);
   }
-  cmd.push(specifier.href);
+  args.push(specifier.href);
 
   if (!tempDir) {
-    tempDir = Deno.makeTempDirSync();
+    tempDir = tmpdir();
   }
 
-  let proc;
+  let proc: Resolve;
 
   try {
-    proc = Deno.run({
-      cmd,
-      stdout: "piped",
+    proc = await run(cmd, args, {
       cwd: tempDir,
     });
-    const raw = await proc.output();
-    const status = await proc.status();
-    if (!status.success) {
-      throw new Error(`Failed to call 'deno info' on '${specifier.href}'`);
-    }
-    const txt = new TextDecoder().decode(raw);
+    
+    const txt = proc.stdout;
     return JSON.parse(txt);
-  } finally {
-    try {
-      proc?.stdout.close();
-    } catch (err) {
-      if (err instanceof Deno.errors.BadResource) {
-        // ignore the error
-      } else {
-        // deno-lint-ignore no-unsafe-finally
-        throw err;
-      }
-    }
-    proc?.close();
+  } catch(error) {
+    throw new Error(`Failed to call '${cmd} ${args.join (" ")}' on '${specifier.href}'\n${error.message}`);
   }
 }
