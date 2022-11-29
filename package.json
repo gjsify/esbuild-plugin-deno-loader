@@ -12,7 +12,9 @@
         "test": "node run-tests.mjs",
         "build": "yarn run build:js && yarn run build:types",
         "build:js": "node esbuild.mjs",
-        "build:types": "tsc --emitDeclarationOnly || exit 0"
+        "build:types": "tsc --emitDeclarationOnly || exit 0",
+        "git:upstream:init": "git remote add upstream https://github.com/lucacasonato/esbuild_deno_loader.git || exit 0",
+        "git:upstream:merge": "yarn git:upstream:init && git fetch upstream && git merge upstream/main"
     },
     "keywords": [
         "gjs",
