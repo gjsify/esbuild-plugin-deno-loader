@@ -133,6 +133,8 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
         if(result?.contents) {
           return transformExtern(options, args, result);
         }
+
+        return result;
       }
       build.onLoad({ filter: /.*\.json/, namespace: "file" }, onLoad);
       build.onLoad({ filter: /.*/, namespace: "http" }, onLoad);
