@@ -3,9 +3,9 @@
     "version": "0.0.1",
     "description": "Deno module resolution for esbuild",
     "type": "module",
-    "main": "dist/mod.cjs",
-    "module": "dist/mod.mjs",
-    "types": "dist/mod.d.ts",
+    "main": "dist/cjs/mod.cjs",
+    "module": "dist/esm/mod.mjs",
+    "types": "dist/types/mod.d.ts",
     "scripts": {
         "clear": "rm -rf dist",
         "print:name": "echo '@gjsify/esbuild-plugin-deno-loader'",
