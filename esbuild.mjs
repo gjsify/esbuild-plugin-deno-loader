@@ -24,6 +24,7 @@ const baseConfig = {
         '@deepkit/type-compiler',
         'esbuild',
         // '@gjsify/resolve-npm',
+        '@gjsify/esbuild-plugin-transform-ext',
         '@gjsify/esbuild-plugin-gjsify',
         '@gjsify/esbuild-plugin-deepkit',
     ],

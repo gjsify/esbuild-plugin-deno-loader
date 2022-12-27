@@ -13,6 +13,7 @@
         "build": "yarn print:name && yarn build:js && yarn run build:types",
         "build:js": "node esbuild.mjs",
         "build:types": "tsc --emitDeclarationOnly || exit 0",
+        "build:example": "node examples/bundle.mjs",
         "git:upstream:init": "git remote add upstream https://github.com/lucacasonato/esbuild_deno_loader.git || exit 0",
         "git:upstream:merge": "yarn git:upstream:init && git fetch upstream && git merge upstream/main"
     },
@@ -23,11 +24,11 @@
         "loader"
     ],
     "devDependencies": {
-        "esbuild": "^0.16.10",
-        "typescript": "^5.0.0-dev.20221222"
+        "esbuild": "^0.16.11",
+        "typescript": "^5.0.0-dev.20221227"
     },
     "dependencies": {
         "@gjsify/esbuild-plugin-deepkit": "workspace:^",
-        "deno-importmap": "github:gjsify/deno-importmap"
+        "deno-importmap": "^0.2.1"
     }
 }

@@ -6,7 +6,10 @@
     "declarationDir": "dist",
     "declaration": true,
     "moduleResolution": "NodeNext",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true
   },
   "files": ["mod.ts"]
 }
