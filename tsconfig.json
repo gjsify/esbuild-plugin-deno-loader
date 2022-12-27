@@ -5,10 +5,10 @@
     "outDir": "dist",
     "declarationDir": "dist",
     "declaration": true,
-    "moduleResolution": "NodeNext",
     "allowSyntheticDefaultImports": true,
     "checkJs": false,
     "skipLibCheck": true,
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true
   },
   "files": ["mod.ts"]
