@@ -11,6 +11,7 @@ import { load as portableLoad } from "./src/portable_loader.js";
 import { ModuleEntry } from "./src/deno.js";
 import { getNodeModulesPath } from './src/node.js';
 import { existsSync } from 'fs';
+import { readFile } from 'fs/promises';
 import { transformExtern, DeepkitPluginOptions } from '@gjsify/esbuild-plugin-deepkit';
 
 export interface DenoPluginOptions {
@@ -44,8 +45,14 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
 
       build.onStart(async function onStart() {
         if (options.importMapURL !== undefined) {
-          const resp = await fetch(options.importMapURL.href);
-          const txt = await resp.text();
+          let txt: string;
+          if(options.importMapURL.href.startsWith('file://')) {
+            const url = new URL(options.importMapURL.href);
+            txt = await readFile(url.pathname, { encoding: 'utf-8'});
+          } else {
+            const resp = await fetch(options.importMapURL.href);
+            txt = await resp.text();
+          }
           importMap = resolveImportMap(JSON.parse(txt), options.importMapURL);
         } else {
           importMap = null;
@@ -55,9 +62,6 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
       build.onResolve({ filter: /.*/ }, async function onResolve(
         args: esbuild.OnResolveArgs,
       ): Promise<esbuild.OnResolveResult | null | undefined> {
-
-        // console.debug("[deno] onResolve", args.path);
-
         // If this is a node module
         if(args.kind === 'import-statement' || args.kind === 'require-call') {
           const nodeModulePath = await getNodeModulesPath(args.path);
@@ -112,8 +116,6 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
         args: esbuild.OnLoadArgs,
       ): Promise<esbuild.OnLoadResult | null> {
         let url;
-
-        // console.debug("[deno] onLoad", args.path);
 
         if (args.namespace === "file") {
           url = toFileUrl(args.path);

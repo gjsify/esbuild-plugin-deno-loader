@@ -1,6 +1,12 @@
 import { denoPlugin } from "./mod.js";
 import { esbuild } from "./test_deps.js";
 import { assert, assertEquals } from "./test_deps.js";
+import crypto from 'crypto';
+
+// Used by test imports
+if(!globalThis.crypto) {
+  globalThis.crypto = crypto;
+}
 
 const ALL = ["native", "portable"] as const;
 

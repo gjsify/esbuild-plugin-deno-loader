@@ -7,10 +7,10 @@ const arg = process.argv.slice(2)[0]
 const dir = resolve(process.cwd(), arg ? arg : '')
 console.log('Running tests in', dir)
 const files = readdirSync(dir).filter((file) => regex.test(file))
-const tests: {name: string; fn: () => Promise<any>}[] = []
+const tests: {name: string; fn: () => Promise<any>}[] = [];
 
-globalThis.Deno = {}
-globalThis.Deno.test = function test(name: string, fn: () => Promise<any>) {
+(globalThis as any).Deno = {};
+(globalThis as any).Deno.test = function test(name: string, fn: () => Promise<any>) {
   tests.push({ name, fn })
 }
 
