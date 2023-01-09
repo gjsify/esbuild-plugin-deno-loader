@@ -1,4 +1,4 @@
-import { globPlugin } from 'esbuild-plugin-glob';
+// import { globPlugin } from 'esbuild-plugin-glob';
 import { build } from 'esbuild';
 import { readFile } from 'fs/promises';
 import { extname, dirname } from 'path';
@@ -28,9 +28,9 @@ const baseConfig = {
         '@gjsify/esbuild-plugin-gjsify',
         '@gjsify/esbuild-plugin-deepkit',
     ],
-    plugins: [
-        globPlugin(),
-    ]
+    // plugins: [
+    //     globPlugin(),
+    // ]
 }
 
 // CJS

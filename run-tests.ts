@@ -16,7 +16,7 @@ const tests: {name: string; fn: () => Promise<any>}[] = [];
 
 async function run() {
   await Promise.all(files.map((file) => import('file://' + dir + '/' + file))).catch((e) =>
-    console.log(e)
+    console.error(e)
   )
   tests.forEach((t) => {
     if (types.isAsyncFunction(t.fn)) {
