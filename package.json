@@ -9,8 +9,8 @@
     "scripts": {
         "clear": "rm -rf dist",
         "print:name": "echo '@gjsify/esbuild-plugin-deno-loader'",
-        "test": "node run-tests.mjs",
-        "build": "yarn print:name && yarn build:js && yarn run build:types",
+        "test": "yarn build:js && node run-tests.mjs",
+        "build": "yarn print:name && yarn build:js && yarn build:types",
         "build:js": "node esbuild.mjs",
         "build:types": "tsc --emitDeclarationOnly || exit 0",
         "build:example": "node examples/bundle.mjs",
