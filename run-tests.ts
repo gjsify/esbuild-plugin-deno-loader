@@ -4,8 +4,10 @@ import { resolve } from 'path'
 
 const regex = /(test|spec).(m|c)?(j)sx?$/m
 const arg = process.argv.slice(2)[0]
-const dir = resolve(process.cwd(), arg ? arg : '')
+const dir = resolve(process.cwd() || '', arg || '')
+
 console.log('Running tests in', dir)
+
 const files = readdirSync(dir).filter((file) => regex.test(file))
 const tests: {name: string; fn: () => Promise<any>}[] = [];
 
