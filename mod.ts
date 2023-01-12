@@ -11,7 +11,7 @@ import { load as portableLoad } from "./src/portable_loader.js";
 import { ModuleEntry } from "./src/deno.js";
 import { getNodeModulesPath } from './src/node.js';
 import { existsSync } from 'fs';
-import { readFile } from 'fs/promises';
+import { readFile, realpath } from 'fs/promises';
 import { transformExtern, DeepkitPluginOptions } from '@gjsify/esbuild-plugin-deepkit';
 
 export interface DenoPluginOptions {
@@ -100,8 +100,11 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
         }
         const protocol = resolved.protocol;
         if (protocol === "file:") {
-          const path = await fromFileUrl(resolved);
+          let path = await fromFileUrl(resolved);
           if(existsSync(path)) {
+
+            path = await realpath(path);
+
             return { path, namespace: "file" };
           } else {
             return null;
