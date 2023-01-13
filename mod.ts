@@ -100,11 +100,9 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
         }
         const protocol = resolved.protocol;
         if (protocol === "file:") {
-          let path = await fromFileUrl(resolved);
+          let path = fromFileUrl(resolved);
           if(existsSync(path)) {
-
             path = await realpath(path);
-
             return { path, namespace: "file" };
           } else {
             return null;
