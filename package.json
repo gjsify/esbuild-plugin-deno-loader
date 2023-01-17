@@ -24,8 +24,8 @@
         "loader"
     ],
     "devDependencies": {
-        "esbuild": "^0.16.17",
-        "typescript": "^5.0.0-dev.20230113"
+        "esbuild": "^0.17.2",
+        "typescript": "^5.0.0-dev.20230117"
     },
     "dependencies": {
         "@gjsify/esbuild-plugin-deepkit": "workspace:^",
