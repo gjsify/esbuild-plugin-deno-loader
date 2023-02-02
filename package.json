@@ -15,7 +15,8 @@
         "build:types": "tsc --emitDeclarationOnly || exit 0",
         "build:example": "node examples/bundle.mjs",
         "git:upstream:init": "git remote add upstream https://github.com/lucacasonato/esbuild_deno_loader.git || exit 0",
-        "git:upstream:merge": "yarn git:upstream:init && git fetch upstream && git merge upstream/main"
+        "git:upstream:diff": "open-cli https://github.com/gjsify/esbuild-plugin-deno-loader/compare/main...lucacasonato:esbuild_deno_loader:main",
+        "git:upstream:merge": "yarn git:upstream:init && yarn git:upstream:diff && git fetch upstream && git merge upstream/main"
     },
     "keywords": [
         "gjs",
@@ -24,8 +25,9 @@
         "loader"
     ],
     "devDependencies": {
-        "esbuild": "^0.17.2",
-        "typescript": "^5.0.0-dev.20230117"
+        "esbuild": "^0.17.5",
+        "open-cli": "^7.1.0",
+        "typescript": "^5.0.0-dev.20230202"
     },
     "dependencies": {
         "@gjsify/esbuild-plugin-deepkit": "workspace:^",

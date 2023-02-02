@@ -1,40 +1,44 @@
-# name: ci
+name: ci
 
-# on:
-#   push:
-#     branches: [main]
-#   pull_request:
-#     branches: [main]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
-# jobs:
-#   test:
-#     name: test-${{ matrix.os }}-${{ matrix.deno }}
-#     runs-on: ${{ matrix.os }}
+jobs:
+  test:
+    name: test-${{ matrix.os }}-${{ matrix.node-version }}
+    runs-on: ${{ matrix.os }}
 
-#     strategy:
-#       matrix:
-#         # Test on the latest stable, and nightly
-#         deno: [v1.x, canary]
-#         os: [macOS-latest, windows-latest, ubuntu-latest]
+    strategy:
+      matrix:
+        # Test on the latest stable, and nightly
+        node-version: [ 18.x ]
+        os: [macOS-latest, windows-latest, ubuntu-latest]
 
-#     steps:
-#       - name: Setup repo
-#         uses: actions/checkout@v2
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v3
 
-#       - name: Setup Deno
-#         uses: denoland/setup-deno@main
-#         with:
-#           deno-version: ${{ matrix.deno }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-#       - run: deno --version
+      - run: node --version
 
-#       - name: Format
-#         if: runner.os == 'Linux'
-#         run: npm run fmt/check
+      # - name: Format
+      #   if: runner.os == 'Linux'
+      #   run: deno fmt --check
 
-#       - name: Lint
-#         if: runner.os == 'Linux'
-#         run: npm run lint
+      # - name: Lint
+      #   if: runner.os == 'Linux'
+      #   run: deno lint
 
-#       - name: Run tests
-#         run: npm run test
+      - name: Install NPM dependencies
+        run: yarn install --immutable
+      - name: Build
+        run: yarn run build
+      - name: Test
+        run: yarn run test
