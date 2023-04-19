@@ -27,7 +27,7 @@
     "devDependencies": {
         "esbuild": "^0.17.8",
         "open-cli": "^7.1.0",
-        "typescript": "^5.0.0-beta"
+        "typescript": "^5.0.4"
     },
     "dependencies": {
         "@gjsify/esbuild-plugin-deepkit": "workspace:^",
