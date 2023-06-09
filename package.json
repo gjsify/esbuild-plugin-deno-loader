@@ -1,6 +1,6 @@
 {
     "name": "@gjsify/esbuild-plugin-deno-loader",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Deno module resolution for esbuild",
     "type": "module",
     "main": "dist/cjs/mod.cjs",
