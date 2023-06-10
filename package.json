@@ -6,6 +6,18 @@
     "main": "dist/cjs/mod.cjs",
     "module": "dist/esm/mod.mjs",
     "types": "dist/types/mod.d.ts",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/types/mod.d.ts",
+                "default": "./dist/esm/mod.mjs"
+            },
+            "require": {
+                "types": "./dist/types/mod.d.ts",
+                "default": "./dist/cjs/mod.cjs"
+            }
+        }
+    },
     "scripts": {
         "clear": "rm -rf dist tsconfig.tsbuildinfo",
         "print:name": "echo '@gjsify/esbuild-plugin-deno-loader'",

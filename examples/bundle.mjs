@@ -1,5 +1,5 @@
 import * as esbuild from "esbuild";
-import { denoPlugin } from "@gjsify/esbuild-plugin-deno-loader";
+import { denoPlugin } from "../dist/esm/mod.mjs"; // "@gjsify/esbuild-plugin-deno-loader";
 
 await esbuild.build({
     plugins: [denoPlugin()],

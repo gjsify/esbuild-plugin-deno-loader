@@ -1,6 +1,8 @@
 # @gjsify/esbuild-plugin-deno-loader
 
-Deno module resolution for `esbuild`.
+Deno module resolution for `esbuild` for Node.js.
+
+This fork makes the plugin executable in Node.js, while the [original plugin](https://github.com/lucacasonato/esbuild_deno_loader) is used in Deno.
 
 ## Example
 
