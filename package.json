@@ -42,7 +42,6 @@
         "typescript": "^5.1.3"
     },
     "dependencies": {
-        "@gjsify/esbuild-plugin-deepkit": "workspace:^",
         "deno-importmap": "^0.2.1"
     }
 }
