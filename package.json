@@ -24,7 +24,7 @@
         "test": "yarn build:js && node run-tests.mjs",
         "build": "yarn print:name && yarn build:js && yarn build:types",
         "build:js": "node esbuild.mjs",
-        "build:types": "tsc --emitDeclarationOnly || exit 0",
+        "build:types": "tsc --emitDeclarationOnly",
         "build:example": "node examples/bundle.mjs",
         "git:upstream:init": "git remote add upstream https://github.com/lucacasonato/esbuild_deno_loader.git || exit 0",
         "git:upstream:diff": "open-cli https://github.com/gjsify/esbuild-plugin-deno-loader/compare/main...lucacasonato:esbuild_deno_loader:main",
