@@ -37,7 +37,7 @@
         "loader"
     ],
     "devDependencies": {
-        "esbuild": "^0.18.2",
+        "esbuild": "^0.18.3",
         "open-cli": "^7.2.0",
         "typescript": "^5.1.3"
     },
