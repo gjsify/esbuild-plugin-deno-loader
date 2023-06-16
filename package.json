@@ -44,11 +44,7 @@
         "esbuild",
         "loader"
     ],
-    "overrides": {
-        "@gjsify/resolve-npm": "latest"
-    },
     "devDependencies": {
-        "@gjsify/resolve-npm": "workspace:^",
         "esbuild": "^0.18.3",
         "open-cli": "^7.2.0",
         "typescript": "^5.1.3"
