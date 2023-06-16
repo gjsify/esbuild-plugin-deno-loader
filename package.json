@@ -1,6 +1,6 @@
 {
     "name": "@gjsify/esbuild-plugin-deno-loader",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Deno module resolution for esbuild",
     "type": "module",
     "main": "dist/cjs/mod.cjs",
@@ -50,7 +50,7 @@
         "typescript": "^5.1.3"
     },
     "dependencies": {
-        "@gjsify/esbuild-plugin-deepkit": "^0.0.2",
+        "@gjsify/esbuild-plugin-deepkit": "^0.0.3",
         "deno-importmap": "^0.2.1"
     }
 }
