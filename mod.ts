@@ -133,7 +133,7 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
             result = await portableLoad(url, options);
         }
 
-        if(result?.contents) {
+        if(result?.contents && options.reflection) {
           return transformExtern(options, args, result);
         }
 
