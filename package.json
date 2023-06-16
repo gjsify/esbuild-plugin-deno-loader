@@ -44,7 +44,7 @@
         "esbuild",
         "loader"
     ],
-    "resolutions": {
+    "overrides": {
         "@gjsify/resolve-npm": "latest"
     },
     "devDependencies": {
