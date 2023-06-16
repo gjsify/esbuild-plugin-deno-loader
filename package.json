@@ -30,6 +30,14 @@
         "git:upstream:diff": "open-cli https://github.com/gjsify/esbuild-plugin-deno-loader/compare/main...lucacasonato:esbuild_deno_loader:main",
         "git:upstream:merge": "yarn git:upstream:init && yarn git:upstream:diff && git fetch upstream && git merge upstream/main"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gjsify/esbuild-plugin-deno-loader.git"
+    },
+    "bugs": {
+        "url": "https://github.com/gjsify/esbuild-plugin-deno-loader/issues"
+    },
+    "homepage": "https://github.com/gjsify/esbuild-plugin-deno-loader#readme",
     "keywords": [
         "gjs",
         "deno",
