@@ -80,6 +80,48 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
             external: true,
           }
         }
+
+        if (args.path.startsWith('ext:')) {
+          const path = args.path;
+          let importModule: string;
+
+          if (path.startsWith('ext:deno_')) {
+            importModule = path.replace(/^ext:deno_/, '@gjsify/deno-runtime-2/ext/');
+          }else if (path.startsWith('ext:runtime/')) {
+            importModule = path.replace(/^ext:runtime\//, '@gjsify/deno-runtime-2/runtime/js/');
+          } else if (path.startsWith('ext:core/')) {
+            importModule = path.replace(/^ext:core\//, '@gjsify/deno-core/');
+          } else {
+            throw new Error(`Unknown ext: module ${path}`);
+          }
+
+          // .ts -> .js
+          importModule = importModule.replace(/\.ts$/, '.js');
+
+          try {
+            const resolvedModule = (await build.resolve(importModule, {
+              importer: args.importer,
+              kind: args.kind,
+              namespace: args.namespace,
+              resolveDir: args.resolveDir,
+              pluginData: args.pluginData,
+            }));
+  
+            if (resolvedModule.errors.length > 0) {
+              console.error(resolvedModule.errors);
+            }
+
+            return resolvedModule;
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
+
+
+          // console.debug('ext:', args, resolvedModule);
+
+          
+        }
         
         const resolveDir = args.resolveDir
           ? `${toFileUrl(args.resolveDir).href}/`
