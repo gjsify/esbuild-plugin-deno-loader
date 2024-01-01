@@ -45,12 +45,12 @@
         "loader"
     ],
     "devDependencies": {
-        "esbuild": "^0.19.10",
+        "esbuild": "^0.19.11",
         "open-cli": "^8.0.0",
         "typescript": "^5.3.3"
     },
     "dependencies": {
-        "@gjsify/esbuild-plugin-deepkit": "^0.0.3",
+        "@gjsify/esbuild-plugin-deepkit": "^0.0.4",
         "deno-importmap": "^0.2.1"
     }
 }

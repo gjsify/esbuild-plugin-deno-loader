@@ -85,7 +85,9 @@ export function denoPlugin(options: DenoPluginOptions & DeepkitPluginOptions = {
           const path = args.path;
           let importModule: string;
 
-          if (path.startsWith('ext:deno_')) {
+          if (path.startsWith('ext:deno_node/')) {
+            importModule = path.replace(/^ext:deno_node\//, '@gjsify/deno-runtime-2/ext/node/polyfills/');
+          }else if (path.startsWith('ext:deno_')) {
             importModule = path.replace(/^ext:deno_/, '@gjsify/deno-runtime-2/ext/');
           }else if (path.startsWith('ext:runtime/')) {
             importModule = path.replace(/^ext:runtime\//, '@gjsify/deno-runtime-2/runtime/js/');
